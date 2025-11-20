@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Proposal: Aventure Aviation Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Calm Harmony (Stone, Cyan, White) -->
+    <!-- Application Structure Plan: A single-page dashboard with sticky top navigation (Overview, Scope, Financials, Timeline). This structure was chosen over a linear document to allow stakeholders (the users) to non-linearly explore the proposal's key areas. The 'Scope' section uses an interactive toggle to switch between 'Core Platform' and 'Automation Modules', preventing cognitive overload from a long list of features. This 'task-oriented' view (understanding what, how much, and when) is more intuitive for a client review than the original report's structure. -->
+    <!-- Visualization & Content Choices:
+        1. Report Info: Financial Breakdown (800k vs 700k). Goal: Compare. Viz: Chart.js Donut Chart. Interaction: Hover tooltips. Justification: Instantly visualizes the cost split between the two main components, which is more impactful than a table. Library: Chart.js (Canvas).
+        2. Report Info: Module A vs. Module B Features. Goal: Organize/Compare. Viz: HTML/Tailwind toggle buttons and content panes. Interaction: Click to swap visible content. Justification: Breaks down the complex scope (Sec 2 & 5) into manageable, focused sections, improving comprehension. Library: Vanilla JS.
+        3. Report Info: Project Timeline (Phases). Goal: Show Change/Process. Viz: HTML/Tailwind CSS grid. Interaction: Visual flow. Justification: Presents the multi-phase delivery as a clear, step-by-step process. Library: N/A (HTML/CSS).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            color: #0e7490;
+            border-bottom-color: #0e7490;
+        }
+        .module-btn.active {
+            background-color: #0e7490;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <header class="sticky top-0 z-50 w-full bg-white shadow-md">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-cyan-800">Aventure Aviation Automation</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" data-target="overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600 hover:text-cyan-700 border-b-2 border-transparent">Overview</a>
+                        <a href="#scope" data-target="scope" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600 hover:text-cyan-700 border-b-2 border-transparent">Scope & Features</a>
+                        <a href="#financials" data-target="financials" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600 hover:text-cyan-700 border-b-2 border-transparent">Financials</a>
+                        <a href="#timeline" data-target="timeline" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600 hover:text-cyan-700 border-b-2 border-transparent">Timeline</a>
+                        <a href="#acceptance" data-target="acceptance" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-600 hover:text-cyan-700 border-b-2 border-transparent">Acceptance</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-stone-400 hover:text-cyan-700 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#overview" data-target="overview" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-cyan-700 hover:bg-stone-100">Overview</a>
+                <a href="#scope" data-target="scope" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-cyan-700 hover:bg-stone-100">Scope & Features</a>
+                <a href="#financials" data-target="financials" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-cyan-700 hover:bg-stone-100">Financials</a>
+                <a href="#timeline" data-target="timeline" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-cyan-700 hover:bg-stone-100">Timeline</a>
+                <a href="#acceptance" data-target="acceptance" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-600 hover:text-cyan-700 hover:bg-stone-100">Acceptance</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <section id="overview" class="pt-16 -mt-16 mb-16">
+            <h2 class="text-3xl font-bold text-cyan-800 mb-6">Project Overview</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-lg text-stone-700 mb-6">
+                    This proposal outlines the development of "Aventure Aviation Automation," a web-based solution designed to streamline the procurement process for aviation parts. The system will automate the labor-intensive task of searching distributor portals (e.g., Boeing, Aviol) by ingesting Excel spreadsheets, performing autonomous searches via headless browsers, and intelligently populating the best available options back into the source files on Google Drive.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-cyan-50 p-4 rounded-lg">
+                        <span class="text-4xl font-bold text-cyan-700 block">1,500,000</span>
+                        <span class="text-sm font-medium text-stone-600">Total Project Value (PKR)</span>
+                    </div>
+                    <div class="bg-cyan-50 p-4 rounded-lg">
+                        <span class="text-4xl font-bold text-cyan-700 block">2</span>
+                        <span class="text-sm font-medium text-stone-600">Core Modules</span>
+                    </div>
+                    <div class="bg-cyan-50 p-4 rounded-lg">
+                        <span class="text-4xl font-bold text-cyan-700 block">5</span>
+                        <span class="text-sm font-medium text-stone-600">Distributor Integrations</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scope" class="pt-16 -mt-16 mb-16">
+            <h2 class="text-3xl font-bold text-cyan-800 mb-6">Scope & Features</h2>
+            <p class="text-lg text-stone-700 mb-6">
+                The project is divided into two major components: the **Core Application Platform** (the foundation, UI, and security) and the **Distributor Automation Modules** (the web scrapers). Select a module below to explore its specific features and user stories.
+            </p>
+            <div class="flex space-x-4 mb-6">
+                <button id="coreBtn" class="module-btn active flex-1 sm:flex-auto text-lg font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 bg-cyan-700 text-white hover:bg-cyan-800">
+                    &#128187; Core Platform
+                </button>
+                <button id="autoBtn" class="module-btn flex-1 sm:flex-auto text-lg font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 bg-white text-stone-700 hover:bg-stone-100">
+                    &#129302; Automation Modules
+                </button>
+            </div>
+
+            <div id="coreContent" class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-cyan-700 mb-4">Module A: Core Application Platform</h3>
+                <p class="text-stone-600 mb-4">Base Infrastructure, UI, Security, and Data Management.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-stone-800 mb-2">Key Features:</h4>
+                        <ul class="list-disc list-inside space-y-1 text-stone-700">
+                            <li>Authentication & RBAC (Employee, Manager, Superuser)</li>
+                            <li>Excel/CSV Ingestion Engine</li>
+                            <li>Google Drive Integration (Upload, Retrieve, Update)</li>
+                            <li>Visual File Gallery (Sorted by date/type)</li>
+                            <li>Telemetry & Activity Logging</li>
+                            <li>User Management (CRUD operations for Managers)</li>
+                            <li>Superuser Configuration (Portal Credentials)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-stone-800 mb-2">User Stories:</h4>
+                        <ul class="list-disc list-inside space-y-1 text-stone-700">
+                            <li><b>As a Manager,</b> I can create, update, or revoke employee accounts.</li>
+                            <li><b>As a Superuser,</b> I can view an audit log of all user activities.</li>
+                            <li><b>As an Employee,</b> I can upload a standard Excel template.</li>
+                            <li><b>As the System,</b> I will validate and upload the file to Google Drive.</li>
+                            <li><b>As an Employee,</b> I can view a gallery of my uploaded files.</li>
+                            <li><b>As a Superuser,</b> I can input credentials for distributor portals.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="autoContent" class="bg-white p-6 rounded-lg shadow-lg hidden">
+                <h3 class="text-2xl font-bold text-cyan-700 mb-4">Module B: Distributor Portal Automation</h3>
+                <p class="text-stone-600 mb-4">Autonomous Searching, "Best Available" Logic, and Data Entry.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-stone-800 mb-2">Key Features:</h4>
+                        <ul class="list-disc list-inside space-y-1 text-stone-700">
+                            <li>Navigate to 5 unique distributor portals</li>
+                            <li>Handle secure login sessions</li>
+                            <li>Search parts by Part Number/Description</li>
+                            <li>"Best Available" Logic (Price, Stock, Pack Qty)</li>
+                            <li>Write-back results to specific Excel columns</li>
+                            <li>Decoupled services for portal independence</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-stone-800 mb-2">User Stories:</h4>
+                        <ul class="list-disc list-inside space-y-1 text-stone-700">
+                            <li><b>As the System,</b> I will spawn a Headless Chrome instance.</li>
+                            <li><b>As the System,</b> I will search for a part number on a target portal.</li>
+                            <li><b>As the System,</b> I will compare results based on Price, Stock, and Packaging.</li>
+                            <li><b>As the System,</b> I will write the selected data back to the correct columns in the Excel file on Google Drive.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="financials" class="pt-16 -mt-16 mb-16">
+            <h2 class="text-3xl font-bold text-cyan-800 mb-6">Financial Proposal &#128176;</h2>
+            <p class="text-lg text-stone-700 mb-6">
+                The total project cost is **1,500,000 PKR**. This is broken down into the one-time cost for the Core Application and the modular cost for each of the 5 distributor automation bots. The chart on the right visualizes this split.
+            </p>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Cost Breakdown</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-stone-100 rounded-lg">
+                                <div class="text-sm font-medium text-stone-500">Total Project Value</div>
+                                <div class="text-3xl font-bold text-cyan-700">1,500,000 PKR</div>
+                            </div>
+                            <div class="p-4 bg-stone-100 rounded-lg">
+                                <div class="text-sm font-medium text-stone-500">Core Web Application</div>
+                                <div class="text-2xl font-bold text-stone-800">800,000 PKR</div>
+                                <p class="text-sm text-stone-600">Includes Backend, Frontend, Ingestion, Google Drive Sync, User Management, and Telemetry.</p>
+                            </div>
+                            <div class="p-4 bg-stone-100 rounded-lg">
+                                <div class="text-sm font-medium text-stone-500">Distributor Automations (Total)</div>
+                                <div class="text-2xl font-bold text-stone-800">700,000 PKR</div>
+                                <p class="text-sm text-stone-600">(5 Bots @ 140,000 PKR each)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="chart-container relative w-full max-w-sm mx-auto h-80 sm:h-96">
+                            <canvas id="financialsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="pt-16 -mt-16 mb-16">
+            <h2 class="text-3xl font-bold text-cyan-800 mb-6">Timeline & Delivery Strategy &#128197;</h2>
+            <p class="text-lg text-stone-700 mb-6">
+                The project will follow a staggered delivery. The Core Application and the first Distributor Bot will be delivered in Phase 1. Subsequent bots will be added as independent modules, ensuring stable and predictable rollouts.
+            </p>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="border-l-4 border-cyan-600 pl-4 py-2 bg-cyan-50 rounded-r-lg">
+                        <h3 class="text-xl font-bold text-cyan-800">Phase 1: Foundation</h3>
+                        <p class="text-lg font-semibold text-stone-700">8-10 Weeks</p>
+                        <p class="text-stone-600 mt-1">Deliverable: Fully functional Core Web App + Distributor Bot 1.</p>
+                    </div>
+                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                        <h3 class="text-xl font-bold text-stone-700">Phase 2: Bot 2</h3>
+                        <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
+                        <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 2.</p>
+                    </div>
+                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                        <h3 class="text-xl font-bold text-stone-700">Phase 3: Bot 3</h3>
+                        <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
+                        <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 3.</p>
+                    </div>
+                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                        <h3 class="text-xl font-bold text-stone-700">Phase 4: Bot 4</h3>
+                        <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
+                        <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 4.</p>
+                    </div>
+                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                        <h3 class="text-xl font-bold text-stone-700">Phase 5: Bot 5</h3>
+                        <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
+                        <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 5.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="acceptance" class="pt-16 -mt-16 mb-16">
+            <h2 class="text-3xl font-bold text-cyan-800 mb-6">Acceptance & Approval</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="text-lg text-stone-700 mb-6">
+                    By signing below, Aventure Aviation Stakeholders agree to the scope, cost, and timeline outlined in this proposal.
+                </p>
+                <div class="mt-8 pt-4 border-t-2 border-stone-200">
+                    <div class="w-full sm:w-1/2">
+                        <div class="text-stone-700 font-semibold mb-2">Client Signature:</div>
+                        <div class="w-full h-12 bg-stone-100 rounded-md border-2 border-dashed border-stone-300"></div>
+                        <div class="text-stone-700 font-semibold mt-4 mb-2">Date:</div>
+                        <div class="w-full h-12 bg-stone-100 rounded-md border-2 border-dashed border-stone-300"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-4 text-stone-500 text-sm">
+        Proposal Date: November 21, 2025
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const financialsData = {
+                labels: ['Core Web Application', 'Distributor Automations'],
+                datasets: [{
+                    label: 'Cost (PKR)',
+                    data: [800000, 700000],
+                    backgroundColor: [
+                        '#0e7490',
+                        '#a5f3fc'
+                    ],
+                    borderColor: [
+                        '#0e7490',
+                        '#a5f3fc'
+                    ],
+                    hoverBackgroundColor: [
+                        '#155e75',
+                        '#67e8f9'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const financialsConfig = {
+                type: 'doughnut',
+                data: financialsData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14,
+                                    family: 'Inter, sans-serif'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'PKR', minimumFractionDigits: 0 }).format(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            };
+
+            const financialsChartCtx = document.getElementById('financialsChart').getContext('2d');
+            if (financialsChartCtx) {
+                new Chart(financialsChartCtx, financialsConfig);
+            }
+
+            const coreBtn = document.getElementById('coreBtn');
+            const autoBtn = document.getElementById('autoBtn');
+            const coreContent = document.getElementById('coreContent');
+            const autoContent = document.getElementById('autoContent');
+
+            if (coreBtn && autoBtn && coreContent && autoContent) {
+                coreBtn.addEventListener('click', () => {
+                    coreContent.classList.remove('hidden');
+                    autoContent.classList.add('hidden');
+                    coreBtn.classList.add('active');
+                    autoBtn.classList.remove('active');
+                });
+
+                autoBtn.addEventListener('click', () => {
+                    coreContent.classList.add('hidden');
+                    autoContent.classList.remove('hidden');
+                    coreBtn.classList.remove('active');
+                    autoBtn.classList.add('active');
+                });
+            }
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = mobileMenuButton.querySelector('svg:first-child');
+            const closeIcon = mobileMenuButton.querySelector('svg:last-child');
+
+            mobileMenuButton.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('hidden');
+                openIcon.classList.toggle('hidden', !isOpen);
+                closeIcon.classList.toggle('hidden', isOpen);
+            });
+            
+            const navLinks = document.querySelectorAll('a.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.dataset.target === id);
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (mobileMenu.classList.contains('hidden') === false) {
+                         mobileMenu.classList.add('hidden');
+                         openIcon.classList.remove('hidden');
+                         closeIcon.classList.add('hidden');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
