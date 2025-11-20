@@ -15,10 +15,27 @@
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
         }
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .glass {
+            background: rgba(255,255,255,0.65);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
+            border-radius: 18px;
+            border: 1.5px solid rgba(200, 200, 200, 0.18);
+        }
+        .user-story-card {
+            transition: box-shadow 0.3s cubic-bezier(.4,2,.6,1), transform 0.3s cubic-bezier(.4,2,.6,1);
+            box-shadow: none;
+        }
+        .user-story-card:hover {
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18), 0 2px 8px 0 rgba(0,0,0,0.10);
+            transform: translateY(-8px) scale(1.03);
+            z-index: 2;
+        }
         .nav-link {
             transition: all 0.3s ease;
         }
@@ -37,7 +54,8 @@
     <header class="sticky top-0 z-50 w-full bg-white shadow-md">
         <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <img src="https://aventureaviation.com/wp-content/uploads/2025/03/Aventure-1000.png" alt="Aventure Aviation Logo" class="h-10 w-auto" style="background:transparent;" />
                     <h1 class="text-xl font-bold text-cyan-800">Aventure Aviation Automation</h1>
                 </div>
                 <div class="hidden md:block">
@@ -77,20 +95,20 @@
 
         <section id="overview" class="pt-16 -mt-16 mb-16">
             <h2 class="text-3xl font-bold text-cyan-800 mb-6">Project Overview</h2>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="glass p-6">
                 <p class="text-lg text-stone-700 mb-6">
                     This proposal outlines the development of "Aventure Aviation Automation," a web-based solution designed to streamline the procurement process for aviation parts. The system will automate the labor-intensive task of searching distributor portals (e.g., Boeing, Aviol) by ingesting Excel spreadsheets, performing autonomous searches via headless browsers, and intelligently populating the best available options back into the source files on Google Drive.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                    <div class="bg-cyan-50 p-4 rounded-lg">
+                    <div class="glass p-4">
                         <span class="text-4xl font-bold text-cyan-700 block">1,500,000</span>
                         <span class="text-sm font-medium text-stone-600">Total Project Value (PKR)</span>
                     </div>
-                    <div class="bg-cyan-50 p-4 rounded-lg">
-                        <span class="text-4xl font-bold text-cyan-700 block">2</span>
+                    <div class="glass p-4">
+                        <span class="text-4xl font-bold text-cyan-700 block">3</span>
                         <span class="text-sm font-medium text-stone-600">Core Modules</span>
                     </div>
-                    <div class="bg-cyan-50 p-4 rounded-lg">
+                    <div class="glass p-4">
                         <span class="text-4xl font-bold text-cyan-700 block">5</span>
                         <span class="text-sm font-medium text-stone-600">Distributor Integrations</span>
                     </div>
@@ -112,7 +130,7 @@
                 </button>
             </div>
 
-            <div id="coreContent" class="bg-white p-6 rounded-lg shadow-lg">
+            <div id="coreContent" class="glass p-6">
                 <h3 class="text-2xl font-bold text-cyan-700 mb-4">Module A: Core Application Platform</h3>
                 <p class="text-stone-600 mb-4">Base Infrastructure, UI, Security, and Data Management.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -170,6 +188,36 @@
             </div>
         </section>
 
+        <section id="user-stories" class="pt-16 -mt-16 mb-16">
+            <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+                <h2 class="text-3xl font-bold text-cyan-800 mb-8">User Stories</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Core Application Platform User Stories -->
+                    <div class="glass p-6 shadow-lg col-span-1">
+                        <h3 class="text-xl font-semibold text-cyan-700 mb-2">Core Platform</h3>
+                        <ul class="grid gap-6">
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As a Manager,</b> I can create, update, or revoke employee accounts. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As a Superuser,</b> I can view an audit log of all user activities. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As an Employee,</b> I can upload a standard Excel template. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As the System,</b> I will validate and upload the file to Google Drive. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As an Employee,</b> I can view a gallery of my uploaded files. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As a Superuser,</b> I can input credentials for distributor portals. </li>
+                        </ul>
+                    </div>
+                    <!-- Distributor Automation Modules User Stories -->
+                    <div class="glass p-6 shadow-lg col-span-1">
+                        <h3 class="text-xl font-semibold text-cyan-700 mb-2">Distributor Automation</h3>
+                        <ul class="grid gap-6">
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As the System,</b> I will spawn a Headless Chrome instance. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As the System,</b> I will search for a part number on a target portal. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As the System,</b> I will compare results based on Price, Stock, and Packaging. </li>
+                            <li class="bg-white/70 rounded-lg p-6 user-story-card w-full"> <b>As the System,</b> I will write the selected data back to the correct columns in the Excel file on Google Drive. </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="financials" class="pt-16 -mt-16 mb-16">
             <h2 class="text-3xl font-bold text-cyan-800 mb-6">Financial Proposal &#128176;</h2>
             <p class="text-lg text-stone-700 mb-6">
@@ -211,28 +259,37 @@
                 The project will follow a staggered delivery. The Core Application and the first Distributor Bot will be delivered in Phase 1. Subsequent bots will be added as independent modules, ensuring stable and predictable rollouts.
             </p>
             <div class="bg-white p-6 rounded-lg shadow-lg">
+                <style>
+                .phase-card {
+                    transition: background 0.25s, border-color 0.25s;
+                }
+                .phase-card:hover {
+                    background: #e0f2fe !important;
+                    border-color: #0891b2 !important;
+                }
+                </style>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="border-l-4 border-cyan-600 pl-4 py-2 bg-cyan-50 rounded-r-lg">
+                    <div class="phase-card border-l-4 border-cyan-600 pl-4 py-2 bg-cyan-50 rounded-r-lg">
                         <h3 class="text-xl font-bold text-cyan-800">Phase 1: Foundation</h3>
-                        <p class="text-lg font-semibold text-stone-700">8-10 Weeks</p>
+                        <p class="text-lg font-semibold text-stone-700">14-16 Weeks</p>
                         <p class="text-stone-600 mt-1">Deliverable: Fully functional Core Web App + Distributor Bot 1.</p>
                     </div>
-                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                    <div class="phase-card border-l-4 border-stone-400 pl-4 py-2 bg-white rounded-r-lg">
                         <h3 class="text-xl font-bold text-stone-700">Phase 2: Bot 2</h3>
                         <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
                         <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 2.</p>
                     </div>
-                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                    <div class="phase-card border-l-4 border-stone-400 pl-4 py-2 bg-white rounded-r-lg">
                         <h3 class="text-xl font-bold text-stone-700">Phase 3: Bot 3</h3>
                         <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
                         <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 3.</p>
                     </div>
-                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                    <div class="phase-card border-l-4 border-stone-400 pl-4 py-2 bg-white rounded-r-lg">
                         <h3 class="text-xl font-bold text-stone-700">Phase 4: Bot 4</h3>
                         <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
                         <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 4.</p>
                     </div>
-                    <div class="border-l-4 border-stone-400 pl-4 py-2">
+                    <div class="phase-card border-l-4 border-stone-400 pl-4 py-2 bg-white rounded-r-lg">
                         <h3 class="text-xl font-bold text-stone-700">Phase 5: Bot 5</h3>
                         <p class="text-lg font-semibold text-stone-700">3-6 Weeks</p>
                         <p class="text-stone-600 mt-1">Deliverable: Integration of Distributor Bot 5.</p>
